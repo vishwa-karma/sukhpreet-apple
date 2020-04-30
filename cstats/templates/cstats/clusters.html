@@ -1,0 +1,68 @@
+{% extends 'cstats/base.html' %}
+{% block content %}
+<head>
+  <title>Cluster Stats</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        div.second {
+            background: rgb(169,169,169,0.3);
+            border-radius: 25px;
+              padding: 20px;
+              width: 600px;
+              height: 250px; 
+        }
+        h1,h2{
+            color :#00FF00;
+        }
+        th{
+            color :#FFFFFF;
+            }
+        table {
+            color: #99e6e6;
+            } 
+    </style>
+</head>
+ <p></p>
+ <p></p>
+ <p></p>
+{% if user.is_authenticated %}
+<i><h2 align="left">
+
+
+        {% if user.is_superuser %}
+                <p style ="color:white"><strong>Hello, admin.</strong></p>
+        {% endif %}
+</h2></i>
+
+<p></p>
+<p></p>
+
+<div class="second">
+    <table class="table" >
+        <tr>
+        <th>Cluster Name</th>
+        <th>Server Count</th>
+        {% if user.is_superuser %}
+        <th>Edit</th>
+        {% endif %}
+        </tr>
+    {% for cluster in clusters %}
+        <tr>
+            <td>{{cluster.cluster}}</td>
+            <td>{{cluster.servers}}</td>
+            <td>{% if user.is_superuser %}
+                   <a class="btn btn-default" href="{% url 'cstats:cluster_edit' pk=cluster.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                {% endif %}
+                {% endfor %}
+            </td>
+
+        </tr>
+    </table>
+</div>
+{% endif %}
+
+{% endblock %}

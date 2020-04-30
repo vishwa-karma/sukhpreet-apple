@@ -1,0 +1,38 @@
+{% load static %}
+<html>
+   <head>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+      <link rel="stylesheet" href="{% static 'accounts/css/main.css' %}">
+   </head>
+   <body>
+<div class="container-login100" style="background-image: url({%static 'accounts/images/bg-01.jpg' %});">
+
+    <div class="row"></div>
+      <div class="content container" style= "float :left" align=left>
+         <div class="row">
+            <div class="col-md-8">
+               {% block content %}
+               {% endblock %}
+            </div>
+         </div>
+      </div>
+      <div class="container-fluid">
+            {% if user.is_authenticated %}
+               <form class ="logout-link" action = "{% url 'accounts:logout' %}" method = "post">
+                  {% csrf_token%}
+                  <div align="right" style="float:right; overflow-x:auto;">
+                    <button width="50%" class="btn btn-light btn-lg"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
+                  </div>
+               </form>
+
+            {% else %}
+               <a href="{% url 'accounts:login' %}">Login</a>
+
+            {% endif  %}
+
+      </div>
+</div>
+   </body>
+</html>
